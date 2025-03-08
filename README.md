@@ -1,7 +1,7 @@
 # Code Test Instructions
 
 🚀 Demo
-(https://roaring-griffin-cf59e0.netlify.app/)
+(https://gsynergy-data-grid.netlify.app/)
 
 ## Setup and Running
 
