@@ -1,20 +1,16 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Box, Typography, Button } from '@mui/material';
 import { Add } from '@mui/icons-material';
 import { SKU } from '../../models/types';
 import { addSku, updateSku, removeSku } from '../../store/skuSlice';
 import TableForSKU from '../../components/ui/skus/TableForSKU';
 import ModalAddSUK from '../../components/ui/skus/ModalAddSUK';
-
-const generateSkuId = () => {
-  const randomNumbers = Math.floor(10000 + Math.random() * 90000);
-  return `SK${randomNumbers}`;
-};
+import { RootState } from '../../store';
 
 const SkusPage: React.FC = () => {
   const dispatch = useDispatch();
-
+  const skus = useSelector((state: RootState) => state.skus.skus);
   const [openDialog, setOpenDialog] = useState(false);
   const [editingSku, setEditingSku] = useState<SKU | null>(null);
   const [skuName, setSkuName] = useState('');
@@ -94,9 +90,14 @@ const SkusPage: React.FC = () => {
         }),
       );
     } else {
+      let newId: string;
+      do {
+        newId = `ST${Math.floor(100 + Math.random() * 900)}`;
+      } while (skus.some((sku: SKU) => sku.id === newId));
+
       dispatch(
         addSku({
-          id: generateSkuId(),
+          id: newId,
           name: skuName,
           price,
           cost,

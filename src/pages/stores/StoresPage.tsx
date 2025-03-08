@@ -1,21 +1,24 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Box, Typography, Button } from '@mui/material';
 import { Add } from '@mui/icons-material';
-import { v4 as uuidv4 } from 'uuid';
 import { Store } from '../../models/types';
 import { addStore, updateStore, removeStore } from '../../store/storeSlice';
 import TableForStore from '../../components/ui/store/TableForStore';
 import ModalAddStore from '../../components/ui/store/ModalAddStore';
+import { RootState } from '../../store';
 
 const StoresPage: React.FC = () => {
   const dispatch = useDispatch();
+  const stores = useSelector((state: RootState) => state.stores);
 
   const [openDialog, setOpenDialog] = useState(false);
   const [editingStore, setEditingStore] = useState<Store | null>(null);
   const [storeLabel, setStoreLabel] = useState('');
   const [storeCity, setStoreCity] = useState('');
   const [storeState, setStoreState] = useState('');
+
+  console.log('data type', stores);
 
   const handleOpenDialog = (store?: Store) => {
     if (store) {
@@ -53,9 +56,14 @@ const StoresPage: React.FC = () => {
         }),
       );
     } else {
+      let newId: string;
+      do {
+        newId = `ST${Math.floor(100 + Math.random() * 900)}`;
+      } while (stores.stores.some((store: Store) => store.id === newId));
+
       dispatch(
         addStore({
-          id: uuidv4(),
+          id: newId,
           label: storeLabel,
           city: storeCity,
           state: storeState,
