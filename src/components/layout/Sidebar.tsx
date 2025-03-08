@@ -18,7 +18,7 @@ const navItems: NavItem[] = [
 
 const Sidebar: React.FC = () => {
   return (
-    <Box sx={{ width: 240, bgcolor: 'background.paper' }}>
+    <Box sx={{ width: 240, bgcolor: 'background.paper', height: '100%' }}>
       <List>
         {navItems.map((item) => (
           <ListItem
