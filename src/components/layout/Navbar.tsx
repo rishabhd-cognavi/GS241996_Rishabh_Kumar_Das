@@ -10,7 +10,7 @@ const Navbar: React.FC = () => {
       <Toolbar>
         <Box display='flex' alignItems='center' flexGrow={1}>
           <img
-            src='/src/assets/GSynergyLogo.svg'
+            src='/GSynergyLogo.svg'
             alt='GSynergy Logo'
             style={{ marginRight: '16px', height: '50px', background: 'white' }}
           />
