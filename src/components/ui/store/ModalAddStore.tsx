@@ -21,7 +21,7 @@ interface ModalAddStoreProps {
   handleSaveStore: () => void;
 }
 
-const AddStoreModal = ({
+const ModalAddStore = ({
   openDialog,
   handleCloseDialog,
   editingStore,
@@ -78,4 +78,4 @@ const AddStoreModal = ({
   );
 };
 
-export default AddStoreModal;
+export default ModalAddStore;

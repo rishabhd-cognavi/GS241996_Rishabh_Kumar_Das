@@ -8,8 +8,10 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  TablePagination,
 } from '@mui/material';
 import { useSelector } from 'react-redux';
+import { useState } from 'react';
 import { RootState } from '../../../store';
 import { Store } from '../../../models/types';
 
@@ -21,6 +23,18 @@ export default function TableForStore({
   onDelete: (storeId: string) => void;
 }) {
   const stores = useSelector((state: RootState) => state.stores.stores);
+
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+
+  const handleChangePage = (event: unknown, newPage: number) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
 
   return (
     <TableContainer component={Paper}>
@@ -42,7 +56,7 @@ export default function TableForStore({
               </TableCell>
             </TableRow>
           ) : (
-            stores.map((store) => (
+            stores.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((store) => (
               <TableRow key={store.id}>
                 <TableCell>{store.id}</TableCell>
                 <TableCell>{store.label}</TableCell>
@@ -61,6 +75,15 @@ export default function TableForStore({
           )}
         </TableBody>
       </Table>
+      <TablePagination
+        rowsPerPageOptions={[10, 30, 50]}
+        component='div'
+        count={stores.length}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onPageChange={handleChangePage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+      />
     </TableContainer>
   );
 }
